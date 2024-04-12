@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <!-- Home 항목 항상 표시 -->
       <a class="navbar-brand" href="/">Home</a>
@@ -28,6 +28,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/AvailableRoom">AvailableRooms</a>
           </li>
+
+          <!-- 로그인 후: LogOut 표시 -->
+          <li class="nav-item" v-if="isLoggedIn">
+            <a class="nav-link" @click="logout" href="#">LogOut</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -39,9 +44,16 @@ export default {
     name : 'HeaderComponent',
     data () {
         return {
-            isLoggedIn: false, // 로그인 상태 초기값은 false
+            isLoggedIn: !!localStorage.getItem('token') // 토큰이 있는지 여부 확인
         };
     },
+    methods: {
+      logout() {
+        localStorage.removeItem('token'); // 토큰 삭제
+        this.isLoggedIn = false; // 로그인 상태를 false로 설정
+        // 로그아웃 후 추가적인 로직이 필요한 경우 여기에 작성
+      }
+    }
 }
 </script>
 
