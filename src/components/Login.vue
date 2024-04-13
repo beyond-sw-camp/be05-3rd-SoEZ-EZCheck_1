@@ -94,6 +94,8 @@ export default {
         // 로그인 성공 시 처리
         console.log('로그인 성공:', response.data);
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', this.userId);
+
         this.$router.push('/'); // 메인 페이지 경로로 변경
       } catch (error) {
         // 로그인 실패 시 처리

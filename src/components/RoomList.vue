@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axios from '@/axios';
+
 export default {
     name : "RoomListComponent",
     props : {
@@ -27,13 +29,41 @@ export default {
                 { type: 'SUITE', description: 'An exquisite suite with premium features.', price: '$300' }
             ]
         }
-    }
-    // methods : {
-    // bookRoom(roomType) {
-    //   console.log(`Booking room: ${roomType}`);
-    //   // 예약 로직을 추가하세요. 예를 들면, 예약 API를 호출하거나, 예약 페이지로 리디렉트할 수 있습니다.
-    // }
-    // }
+    },
+    methods : {
+    bookRoom(roomType) {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        alert('로그인이 필요합니다');
+        this.$router.push('/login');
+        return;
+      }
+      const rgId = roomType === 'SUPERIOR' ? 1 :
+                 roomType === 'DELUXE' ? 2 :
+                 roomType === 'SUITE' ? 3 : null;
+      let reservationRequest = {
+        uId: userId, // This should be dynamically set based on the logged-in user
+        rgId: rgId, // Map roomType to rgId if necessary
+        rvDateFrom: this.checkInDate,
+        rvDateTo: this.checkOutDate
+      };
+
+      axios.post('/reservation/make', reservationRequest, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+            .then(response => {
+              alert('Room booked successfully!');
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.error('Error booking the room:', error);
+              alert('Failed to book the room.');
+            });
+
+          }
+          }
 }
 </script>
 

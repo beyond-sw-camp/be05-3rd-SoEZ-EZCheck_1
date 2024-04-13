@@ -3,7 +3,7 @@
   <main>
       <!-- 날짜 선택 섹션 -->
       <section>
-        <Datepicker/>
+        <Datepicker @update-dates="handleDateChange"/>
       </section>
 
       <!-- 사용 가능한 방 타입 표시 섹션 -->
@@ -28,6 +28,12 @@ export default {
       checkOutDate: null,
     };
   },
+  methods: {
+    handleDateChange(dates) {
+      this.checkInDate = dates.checkInDate;
+      this.checkOutDate = dates.checkOutDate;
+    }
+  }
 }
 </script>
 
