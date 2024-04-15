@@ -1,6 +1,5 @@
 <template>
   <div class="room-list">
-    <h2>Available Rooms</h2>
     <div v-for="room in availableRooms" :key="room.type" class="room">
       <div class="room-details">
         <h3>{{ room.type }}</h3>
@@ -52,7 +51,7 @@ export default {
             axios.post('/reservation/listAvailableGrades', reservationRequest, {
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${localStorage.getItem('token')}`
+                  //'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then(response => {

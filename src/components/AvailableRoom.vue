@@ -1,6 +1,7 @@
 <template>
   <Header/>
   <main>
+    <h2>Available Rooms</h2>
       <!-- 날짜 선택 섹션 -->
       <section>
         <Datepicker @update-dates="handleDateChange"/>
