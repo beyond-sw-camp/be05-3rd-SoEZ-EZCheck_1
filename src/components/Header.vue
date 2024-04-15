@@ -5,7 +5,8 @@
       <a class="navbar-brand" href="/">Home</a>
 
       <!-- 햄버거 메뉴 버튼, 오른쪽 정렬 -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -17,7 +18,7 @@
             <a class="nav-link" href="/Login">Login</a>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <a class="nav-link" href="/Signup">Signup</a>
+            <router-link class="nav-link" to="/signup">Signup</router-link>
           </li>
 
           <!-- 로그인 후: MyPage 표시 -->
@@ -41,25 +42,25 @@
 
 <script>
 export default {
-    name : 'HeaderComponent',
-    data () {
-        return {
-            isLoggedIn: !!localStorage.getItem('token') // 토큰이 있는지 여부 확인
-        };
-    },
-    methods: {
-      logout() {
-        localStorage.removeItem('token'); // 토큰 삭제
-        this.isLoggedIn = false; // 로그인 상태를 false로 설정
-        // 로그아웃 후 추가적인 로직이 필요한 경우 여기에 작성
-      }
+  name: 'HeaderComponent',
+  data() {
+    return {
+      isLoggedIn: !!localStorage.getItem('token') // 토큰이 있는지 여부 확인
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('token'); // 토큰 삭제
+      this.isLoggedIn = false; // 로그인 상태를 false로 설정
+      // 로그아웃 후 추가적인 로직이 필요한 경우 여기에 작성
     }
+  }
 }
 </script>
 
 <style>
-    Navbar {
-        margin : 0;
-        padding : 0;
-    }
+Navbar {
+  margin: 0;
+  padding: 0;
+}
 </style>
