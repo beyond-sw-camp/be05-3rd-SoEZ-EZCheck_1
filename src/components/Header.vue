@@ -2,7 +2,7 @@
   <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <!-- Home 항목 항상 표시 -->
-      <a class="navbar-brand" href="/">Home</a>
+      <router-link class="navbar-brand" to="/">Home</router-link>
 
       <!-- 햄버거 메뉴 버튼, 오른쪽 정렬 -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -15,7 +15,7 @@
         <ul class="navbar-nav ms-auto">
           <!-- 로그인 전: Login과 Signup 표시 -->
           <li class="nav-item" v-if="!isLoggedIn">
-            <a class="nav-link" href="/Login">Login</a>
+            <router-link class="nav-link" to="/Login">Login</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/signup">Signup</router-link>
@@ -23,11 +23,11 @@
 
           <!-- 로그인 후: MyPage 표시 -->
           <li class="nav-item" v-if="isLoggedIn">
-            <a class="nav-link" href="/MyPage">MyPage</a>
+            <router-link class="nav-link" to="/MyPage">MyPage</router-link>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/AvailableRoom">AvailableRooms</a>
+            <router-link class="nav-link" to="/AvailableRoom">AvailableRooms</router-link>
           </li>
 
           <!-- 로그인 후: LogOut 표시 -->
@@ -52,6 +52,7 @@ export default {
     logout() {
       localStorage.removeItem('token'); // 토큰 삭제
       this.isLoggedIn = false; // 로그인 상태를 false로 설정
+      this.$router.push('/'); // 메인 페이지 경로로 변경
       // 로그아웃 후 추가적인 로직이 필요한 경우 여기에 작성
     }
   }
