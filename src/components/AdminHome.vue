@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <AdminHeader/>hi
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-2 mt-3">관리자 페이지</h2>
+        </div>
+        <AdminHeader/>
     </div>
 </template>
 

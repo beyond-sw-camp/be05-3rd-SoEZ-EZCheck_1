@@ -1,17 +1,14 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3 class="mb-2 mt-2">관리자 체크아웃 관리</h3>
+        <div class="row align-items-stretch">
+            <div class="col-md-6 d-flex justify-content-start align-items-begin">
+                <h3 class="mt-3">체크아웃 요청 승인</h3>
             </div>
-            <Datepicker @update-dates="handleDateChange"/>
-            <div class="col-md-6 d-flex justify-content-end align-items-end">
-                <button class="btn btn-primary">저장</button>
+            <div class="col-md-6 d-flex justify-content-end align-items-begin">
+                <button class="btn btn-primary mt-3">저장</button>
             </div>
         </div>
-        <section>
-                <Datepicker @update-dates="handleDateChange"/>
-            </section>
+
         <hr>
 
         <table class="table table-bordered mz-">
