@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -51,12 +52,16 @@
 </template>
 
 <script>
+import Header from './Header.vue';
 import {ref} from 'vue';
 // import {useRouter} from 'vue-router'
 import axios from '@/axios';
 // import Datepicker from './Datepicker.vue';
 
 export default {
+    components : {
+        Header
+    },
     setup(){
         console.log(">>>>>> setup");
         const rooms = ref([]);

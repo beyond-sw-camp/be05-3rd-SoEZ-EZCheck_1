@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <div>
         <AdminHeader/>hi
     </div>
@@ -8,10 +9,12 @@
 import { useRouter } from 'vue-router';
 // import Datepicker from './Datepicker.vue';
 import AdminHeader from './AdminHeader.vue';
+import Header from './Header.vue';
 
 export default {
     components : {
-        AdminHeader
+        AdminHeader,
+        Header
     },
     setup () {
         const router = useRouter();

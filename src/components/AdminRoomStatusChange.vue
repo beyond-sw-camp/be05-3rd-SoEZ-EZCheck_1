@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -50,8 +51,12 @@
 import {ref} from 'vue';
 // import {useRouter} from 'vue-router'
 import axios from '@/axios';
+import Header from './Header.vue';
 
 export default {    
+    components : {
+        Header
+    },
     setup () {
         console.log(">>>>>> setup");
         const searchText = ref('');
