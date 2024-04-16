@@ -4,6 +4,11 @@ import Login from '../components/Login.vue';
 import AvailableRoom from '../components/AvailableRoom.vue';
 import UserSignup from '../components/UserSignup.vue';
 import MyPage from '../components/MyPage.vue';
+// import AdminMain from '@/AdminMain.vue';
+import AdminHome from '@/components/AdminHome.vue';
+import AdminCheckout from '@/components/AdminCheckout.vue';
+import AdminRoomStatusChange from '@/components/AdminRoomStatusChange.vue';
+
 
 const routes = [
     {
@@ -30,6 +35,21 @@ const routes = [
         path: "/MyPage",
         name: "MyPage",
         component: MyPage
+    },
+    {
+        path: '/',
+        name: 'AdminHome',
+        component : AdminHome
+    },
+    {
+        path: '/AdminCheckout',
+        name: 'AdminCheckout',
+        component : AdminCheckout
+    },
+    {
+        path: '/AdminRoomStatusChange',
+        name: 'AdminRoomStatusChange',
+        component : AdminRoomStatusChange
     }
 ];
 
