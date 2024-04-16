@@ -37,7 +37,7 @@ const routes = [
         component: MyPage
     },
     {
-        path: '/',
+        path: '/AdminHome',
         name: 'AdminHome',
         component : AdminHome
     },

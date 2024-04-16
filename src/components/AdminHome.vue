@@ -1,5 +1,7 @@
 <template>
-    <AdminHeader/>
+    <div>
+        <AdminHeader/>hi
+    </div>
 </template>
 
 <script>
