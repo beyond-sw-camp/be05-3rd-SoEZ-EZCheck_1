@@ -1,51 +1,52 @@
 <template>
-    <Header/>
-    <div class="container">
-        <div class="row align-items-stretch">
-            <div class="col-md-6 d-flex justify-content-start align-items-begin">
-                <h3 class="mt-3">체크아웃 요청 승인</h3>
+    <div>
+        <Header/>
+        <div class="container">
+            <div class="row align-items-stretch">
+                <div class="col-md-6 d-flex justify-content-start align-items-begin">
+                    <h3 class="mt-3">체크아웃 요청 승인</h3>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end align-items-begin">
+                    <button class="btn btn-primary mt-3">저장</button>
+                </div>
             </div>
-            <div class="col-md-6 d-flex justify-content-end align-items-begin">
-                <button class="btn btn-primary mt-3">저장</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <table class="table table-bordered mz-">
-            <tr class="submenu">
-                <th>체크아웃 요청ID</th>
-                <th>사용자ID</th>
-                <th>체크아웃 요청 날짜</th>
-                <th>체크아웃 상태</th>
-                <!-- 체크아웃 상태는 INPROGRESS, ACCEPTED나 REJECTED 중 택1 -->
-            </tr>
-
-            <tbody>
-                <tr v-for="room in rooms"
-                    :key="room.coutId" align="center">
-                    <td>{{room.coutId}}</td>
-                    <td>{{room.uId}}</td>
-                    <td>{{room.coutDate}}</td>
-                    <!-- <td :class="coutRooms.coutStatus" @click="toggleStatus(coutRoom)" @click.stop>
-                        {{coutRoom.rStatus ? 'Maintenance' : 'Available'}}
-                    </td> -->
-                    <td>
-                        <div>
-                            <input type="radio" v-model="room.approvalStatus" value="ACCEPTED">
-                            ACCEPTED
-                        </div>
-                        <div>
-                            <input type="radio" v-model="room.approvalStatus" value="REJECTED">
-                            REJECTED
-                        </div>
-                    </td>
+            <table class="table table-bordered mz-">
+                <tr class="submenu">
+                    <th>체크아웃 요청ID</th>
+                    <th>사용자ID</th>
+                    <th>체크아웃 요청 날짜</th>
+                    <th>체크아웃 상태</th>
+                    <!-- 체크아웃 상태는 INPROGRESS, ACCEPTED나 REJECTED 중 택1 -->
                 </tr>
 
-            </tbody>
-        </table>
-    </div>
+                <tbody>
+                    <tr v-for="room in rooms"
+                        :key="room.coutId" align="center">
+                        <td>{{room.coutId}}</td>
+                        <td>{{room.uId}}</td>
+                        <td>{{room.coutDate}}</td>
+                        <!-- <td :class="coutRooms.coutStatus" @click="toggleStatus(coutRoom)" @click.stop>
+                            {{coutRoom.rStatus ? 'Maintenance' : 'Available'}}
+                        </td> -->
+                        <td>
+                            <div>
+                                <input type="radio" v-model="room.approvalStatus" value="ACCEPTED">
+                                ACCEPTED
+                            </div>
+                            <div>
+                                <input type="radio" v-model="room.approvalStatus" value="REJECTED">
+                                REJECTED
+                            </div>
+                        </td>
+                    </tr>
 
+                </tbody>
+            </table>
+        </div>
+    </div>
 </template>
 
 <script>

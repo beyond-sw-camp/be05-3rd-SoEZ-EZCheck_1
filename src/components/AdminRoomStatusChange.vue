@@ -62,10 +62,10 @@ export default {
         const searchText = ref('');
         const rooms = ref([]);
 
-        const getRooms = async () => {
+        const getRooms = async (rId) => {
             console.log("happy");
             try {
-                const response = await axios.get('rooms');
+                const response = await axios.get(`room/updateRoomStatus/${rId}`);
                 rooms.value = response.data;
             } catch (error) {
                 console.error(error);

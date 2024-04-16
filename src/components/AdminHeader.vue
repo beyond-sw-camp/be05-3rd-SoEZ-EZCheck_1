@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-4 mt-4 border">관리자 페이지</h2>
+        </div>
         <div class="row">
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="card">
@@ -60,4 +63,7 @@ export default {
 </script>
 
 <style>
+.border {
+    border-bottom: 10px solid #dee2e6;
+}
 </style>
