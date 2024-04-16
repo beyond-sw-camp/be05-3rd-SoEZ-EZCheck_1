@@ -31,8 +31,8 @@
       <div class="col d-flex justify-content-center">
         <!-- Checkbox -->
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-          <label class="form-check-label" for="form2Example31"> Remember me </label>
+          <input type="checkbox" v-model="isAdmin" class="form-check-input" id="adminLoginCheck" />
+          <label class="form-check-label" for="adminLoginCheck">관리자 로그인</label>
         </div>
       </div>
 
@@ -70,7 +70,6 @@
     </div>
   </form>
 </template>
-
 <script>
 import Header from './Header.vue';
 import axios from '@/axios';
@@ -81,31 +80,39 @@ export default {
   data() {
     return {
       userId: '',
-      password: ''
+      password: '',
+      isAdmin: false  // 관리자 로그인 옵션 추가
     };
   },
   methods: {
     async signIn() {
       try {
-        const response = await axios.post('user/signin', {
+        // 관리자 로그인 여부에 따라 API 엔드포인트 변경
+        const endpoint = this.isAdmin ? '/admin/signin' : '/user/signin';
+        
+        const response = await axios.post(endpoint, {
           userId: this.userId,
           password: this.password
         });
+        
         // 로그인 성공 시 처리
         console.log('로그인 성공:', response.data);
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', this.userId);
+        localStorage.setItem('token', response.data.token);  // 토큰 저장
+        localStorage.setItem('userId', this.userId);  // 사용자 ID 저장
+        localStorage.setItem('type', this.isAdmin ? 'Admin' : 'User');
 
-        this.$router.push('/'); // 메인 페이지 경로로 변경
+        this.$router.push('/');  // 메인 페이지 경로로 리디렉션
       } catch (error) {
         // 로그인 실패 시 처리
         console.error('로그인 실패:', error);
-        localStorage.removeItem('token'); // 토큰 삭제
-        this.isLoggedIn = false; // 로그인 상태를 false로 설정
+        alert('로그인 실패: ' + error.response.data.message);  // 실패 메시지 표시
+        localStorage.removeItem('token');  // 로그인 실패 시 토큰 삭제
+        this.isLoggedIn = false;  // 로그인 상태를 false로 설정
       }
     }
   }
 }
 </script>
+
 
 <style></style>

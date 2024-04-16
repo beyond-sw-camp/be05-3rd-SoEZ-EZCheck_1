@@ -22,13 +22,17 @@
           </li>
 
           <!-- 로그인 후: MyPage 표시 -->
-          <li class="nav-item" v-if="isLoggedIn">
+        
+          <li class="nav-item" v-if="isLoggedIn && !loggedType">
             <router-link class="nav-link" to="/MyPage">MyPage</router-link>
           </li>
-
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLoggedIn && !loggedType">
             <router-link class="nav-link" to="/AvailableRoom">AvailableRooms</router-link>
           </li>
+          <li class="nav-item" v-if="isLoggedIn && loggedType">
+            <router-link class="nav-link" to="/AdminHome">AdminPage</router-link>
+          </li>
+  
 
           <!-- 로그인 후: LogOut 표시 -->
           <li class="nav-item" v-if="isLoggedIn">
@@ -46,11 +50,13 @@ export default {
   data() {
     return {
       isLoggedIn: !!localStorage.getItem('token') // 토큰이 있는지 여부 확인
+      , loggedType: localStorage.getItem('type')==="Admin" // 사용자 타입 확인
     };
   },
   methods: {
     logout() {
       localStorage.removeItem('token'); // 토큰 삭제
+      localStorage.removeItem('type'); // 사용자 타입 삭제
       this.isLoggedIn = false; // 로그인 상태를 false로 설정
       this.$router.push('/'); // 메인 페이지 경로로 변경
       // 로그아웃 후 추가적인 로직이 필요한 경우 여기에 작성
