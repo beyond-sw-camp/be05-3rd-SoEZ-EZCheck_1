@@ -1,9 +1,7 @@
 <template>
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2 class="mb-2 mt-3">관리자 페이지</h2>
-        </div>
-        <AdminHeader/>
+    <Header/>
+    <div>
+        <AdminHeader/>hi
     </div>
 </template>
 
@@ -11,10 +9,12 @@
 import { useRouter } from 'vue-router';
 // import Datepicker from './Datepicker.vue';
 import AdminHeader from './AdminHeader.vue';
+import Header from './Header.vue';
 
 export default {
     components : {
-        AdminHeader
+        AdminHeader,
+        Header
     },
     setup () {
         const router = useRouter();

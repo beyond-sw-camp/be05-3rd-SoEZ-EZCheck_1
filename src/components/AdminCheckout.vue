@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <div class="container">
         <div class="row align-items-stretch">
             <div class="col-md-6 d-flex justify-content-start align-items-begin">
@@ -48,12 +49,16 @@
 </template>
 
 <script>
+import Header from './Header.vue';
 import {ref} from 'vue';
 // import {useRouter} from 'vue-router'
 import axios from '@/axios';
 // import Datepicker from './Datepicker.vue';
 
 export default {
+    components : {
+        Header
+    },
     setup(){
         console.log(">>>>>> setup");
         const rooms = ref([]);

@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <div class="container">
         <div class="row align-items-stretch">
             <div class="col-md-6 d-flex justify-content-start align-items-begin">
@@ -50,8 +51,12 @@
 import {ref} from 'vue';
 // import {useRouter} from 'vue-router'
 import axios from '@/axios';
+import Header from './Header.vue';
 
 export default {    
+    components : {
+        Header
+    },
     setup () {
         console.log(">>>>>> setup");
         const searchText = ref('');
