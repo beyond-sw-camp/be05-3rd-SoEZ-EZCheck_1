@@ -100,6 +100,8 @@ export default {
       } catch (error) {
         // 로그인 실패 시 처리
         console.error('로그인 실패:', error);
+        localStorage.removeItem('token'); // 토큰 삭제
+        this.isLoggedIn = false; // 로그인 상태를 false로 설정
       }
     }
   }
