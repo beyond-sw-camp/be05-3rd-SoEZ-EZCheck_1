@@ -10,14 +10,14 @@
                 <p>방 등급: {{ reservation.roomGrade.roomGradeEnum }}</p>
                 <div v-if="reservation.checkIn === undefined">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                        :data-target="'#modal-' + reservation.rvId" @click="showModal(reservation)">
+                        :data-target="'#modal-' + reservation.rvId" @click="showModal(reservation), openModal()">
                         체크인
                     </button>
                 </div>
                 <div v-if="reservation.checkIn">
                     <h4>체크인 정보:</h4>
                     <p>체크인 ID: {{ reservation.checkIn.cinId }}</p>
-                    <p>객실ID: {{ reservation.checkIn.room.rId }}</p>
+                    <p>객실ID: {{ reservation.checkIn.room.rid }}</p>
                     <p>체크인 날짜: {{ reservation.checkIn.cinDate }}</p>
                     <p>체크인 시간: {{ reservation.checkIn.cinTime }}</p>
                     <button type="button"> <!-- 체크아웃 버튼 -->
@@ -27,6 +27,7 @@
             </div>
         </div>
         <p v-else>예약 목록이 없습니다.</p>
+        <div v-if="showModalBool">
         <div v-for="reservation in reservations" :key="'modal-' + reservation.rvId" :id="'modal-' + reservation.rvId"
             class="modal fade" tabindex="-1" aria-labelledby="'modalLabel-' + reservation.rvId" aria-hidden="true">
             <div class="modal-dialog">
@@ -48,6 +49,7 @@
                 </div>
             </div>
         </div>
+        </div>
 
     </div>
 </template>
@@ -62,10 +64,23 @@ export default {
         return {
             reservations: [],
             rooms: [],
-            filteredRooms: []
+            filteredRooms: [],
+            showModalBool: false
         };
     },
     methods: {
+        openModal() {
+            this.showModalBool = true;
+        },
+        closeModal() {
+            this.showModalBool = false;
+            document.body.classList.remove("modal-open");
+            document.body.style.overflow = "";
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => {
+            backdrop.parentNode.removeChild(backdrop);
+    });
+        },
         fetchReservations() {
             const userId = localStorage.getItem('userId');
             if (!userId) {
@@ -98,6 +113,7 @@ export default {
                 }
             })
                 .then(response => {
+                    console.log('체크인 정보:', response.data);/////
                     if (response.data) {
                         // 체크인 정보가 있는 경우, 예약 객체에 직접 할당
                         reservation.checkIn = response.data;
@@ -153,6 +169,8 @@ export default {
             })
                 .then(response => {
                     alert('체크인이 완료되었습니다: ' + response.data);
+                    this.closeModal();
+                    this.fetchReservations();
                     // 체크인 후 모달 닫기 및 필드 초기화
                     room.roomPwd = ''; // 비밀번호 필드 초기화
                 })
@@ -162,6 +180,7 @@ export default {
                 });
         }
     },
+    
     mounted() {
         this.fetchReservations();
     }

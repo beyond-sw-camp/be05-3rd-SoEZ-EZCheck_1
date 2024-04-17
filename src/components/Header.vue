@@ -26,7 +26,7 @@
           <li class="nav-item" v-if="isLoggedIn && !loggedType">
             <router-link class="nav-link" to="/MyPage">MyPage</router-link>
           </li>
-          <li class="nav-item" v-if="isLoggedIn && !loggedType">
+          <li class="nav-item" v-if="!loggedType">
             <router-link class="nav-link" to="/AvailableRoom">AvailableRooms</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn && loggedType">
