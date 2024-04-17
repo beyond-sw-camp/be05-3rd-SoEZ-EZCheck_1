@@ -101,12 +101,12 @@
 <div align="left"><img src="https://github.com/beyond-sw-camp/be05-2nd-SoEZ-EZCheck/assets/112090609/d4aa6fdb-d341-4c08-a6e6-12b3e582033b" width="600" /></div>
 </br>
 
-## 📝 프론트 설계 구조
+## 📝 Wire Frame
 [요구사항 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1wkCAW3SN-maeXB0BXnZn7svSK6Sjo7YLFL-78kbF_vw/edit#gid=1162915854)
 <div align="left"><img src="https://github.com/beyond-sw-camp/be05-2nd-SoEZ-EZCheck/assets/112090609/d4aa6fdb-d341-4c08-a6e6-12b3e582033b" width="600" /></div>
 </br>
 
-## 📝 Wire Frame
+## 📝 스토리 보드
 [요구사항 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1wkCAW3SN-maeXB0BXnZn7svSK6Sjo7YLFL-78kbF_vw/edit#gid=1162915854)
 <div align="left"><img src="https://github.com/beyond-sw-camp/be05-2nd-SoEZ-EZCheck/assets/112090609/d4aa6fdb-d341-4c08-a6e6-12b3e582033b" width="600" /></div>
 </br>
