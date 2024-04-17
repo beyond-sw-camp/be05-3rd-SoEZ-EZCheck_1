@@ -28,6 +28,7 @@
                     <h5>체크인 정보:</h5>
                     <p>체크인 ID: {{ reservation.checkIn.cinId }}</p>
                     <p>객실ID: {{ reservation.checkIn.room.rid }}</p>
+                    <p>객실ID: {{ reservation.checkIn.room.rid }}</p>
                     <p>체크인 날짜: {{ reservation.checkIn.cinDate }}</p>
                     <p>체크인 시간: {{ reservation.checkIn.cinTime }}</p>
                     <!-- 체크아웃 버튼 -->
@@ -41,6 +42,7 @@
             </div>
         </div>
         <p v-else>예약 목록이 없습니다.</p>
+        <div v-if="showModalBool">
         <div v-for="reservation in reservations" :key="'modal-' + reservation.rvId" :id="'modal-' + reservation.rvId"
             class="modal fade" tabindex="-1" aria-labelledby="'modalLabel-' + reservation.rvId" aria-hidden="true">
             <div class="modal-dialog">
@@ -75,10 +77,23 @@ export default {
         return {
             reservations: [],
             rooms: [],
-            filteredRooms: []
+            filteredRooms: [],
+            showModalBool: false
         };
     },
     methods: {
+        openModal() {
+            this.showModalBool = true;
+            },
+        closeModal() {
+            this.showModalBool = false;
+            document.body.classList.remove("modal-open");
+            document.body.style.overflow = "";
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => {
+            backdrop.parentNode.removeChild(backdrop);
+            });
+        },  
         fetchReservations() {
             const userId = localStorage.getItem('userId');
             if (!userId) {
@@ -177,6 +192,8 @@ export default {
             })
                 .then(response => {
                     alert('체크인이 완료되었습니다: ' + response.data);
+                    this.fetchReservations();
+                    this.closeModal();
                     // 체크인 후 모달 닫기 및 필드 초기화
                     room.roomPwd = ''; // 비밀번호 필드 초기화
                 })
