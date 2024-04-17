@@ -17,7 +17,7 @@
                 <div v-if="reservation.checkIn">
                     <h4>체크인 정보:</h4>
                     <p>체크인 ID: {{ reservation.checkIn.cinId }}</p>
-                    <p>객실ID: {{ reservation.checkIn.room.rId }}</p>
+                    <p>객실ID: {{ reservation.checkIn.room.rid }}</p>
                     <p>체크인 날짜: {{ reservation.checkIn.cinDate }}</p>
                     <p>체크인 시간: {{ reservation.checkIn.cinTime }}</p>
                     <button type="button"> <!-- 체크아웃 버튼 -->

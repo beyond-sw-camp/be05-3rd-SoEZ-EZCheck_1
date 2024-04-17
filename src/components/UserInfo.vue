@@ -42,33 +42,42 @@
                 <h6>회원가입시 입력한 이메일을 입력해주세요</h6>
                 <br />
 
-             
                 <div class="auth-wrapper">
                     <label for="email" class="">이메일</label>
-                    <div class="">
-                        <input v-model="email" type="email" placeholder="e-mail@example.com">
-                    </div>
-                    <div class="">
-                        <button class="" @click="sendAuthEmail">인증메일 발송</button>
-                    </div>
+                    <input class="input-class" v-model="email" type="email" placeholder="e-mail@example.com">
+                </div>
+                <div class="button-wrapper" @click="sendAuthEmail">인증메일 발송</div>
+
+
+                <div v-if="isAuthEmailSent" class="auth-wrapper">
+                    <label for="authCode" class="">인증번호</label>
+                    <input class="input-class" v-model="authCode" type="text" placeholder="인증번호">
                 </div>
 
-                <div v-if="!isAuthEmailSent" class="auth-wrapper">
-                    <label for="authCode" class="">인증번호</label>
+                <div v-if="isAuthEmailSent" class="button-wrapper" @click="checkAuthCode">인증확인</div>
+
+                <hr />
+
+                <div v-if="isAuthCodeValid" class="auth-wrapper">
+                    <label for="newPassword" class="">새 비밀번호</label>
                     <div class="">
-                        <input v-model="authCode" type="text" placeholder="인증번호">
-                    </div>
-                    <div class="">
-                        <button class="" @click="checkAuthCode">인증확인</button>
+                        <input v-model="newPassword" type="password" placeholder="변경할 비밀번호" class="input-class">
                     </div>
                 </div>
-               
 
                 <div class=" button-container">
-                    <button class="cancel-btn" @click="cancelReset">취소</button>
-                    <button class="delete-btn" @click="resetPassword">재설정</button>
+                    <button class="btn cancel-btn" @click="cancelReset">취소</button>
+                    <button class="btn delete-btn" @click="resetPassword" :disabled="!isAuthCodeValid">재설정</button>
                 </div>
 
+            </div>
+        </div>
+
+        <div v-if="showResetResultModal" class="modal">
+            <div class="modal-content">
+                <h2>비밀번호 재설정 결과</h2>
+                <p>{{ resetResult }}</p>
+                <button class="cancel-btn" @click="closeAllModal">확인</button>
             </div>
         </div>
 
@@ -96,10 +105,12 @@ export default {
         const showPwdResetModal = ref(false);
         const password = ref('');
         const email = ref('');
+        const authCode = ref('');
+        const newPassword = ref('');
         const isAuthEmailSent = ref(false);
         const isAuthCodeValid = ref(false);
-        const authCode = ref('');
-
+        const showResetResultModal = ref(false);
+        const resetResult = ref('');
 
         const deleteAccount = async () => {
             try {
@@ -148,13 +159,62 @@ export default {
         const sendAuthEmail = async () => {
             try {
                 alert("인증 메일이 발송되었습니다.");
-                await axios.post('http://localhost:8080/user/auth/send', { email: email })
+                await axios.post('http://localhost:8080/user/auth/send', {
+                    email: email.value
+                });
+                console.log(email);
                 isAuthEmailSent.value = true
             }
             catch (error) {
                 console.error(error)
             }
         };
+
+        const checkAuthCode = async () => {
+            try {
+                const response = await axios.post('http://localhost:8080/user/auth/check', {
+                    email: email.value, authCode: authCode.value
+                });
+                isAuthCodeValid.value = response.data
+                if (isAuthCodeValid.value === true) {
+                    alert("인증되었습니다.");
+                } else {
+                    alert("인증코드가 일치하지 않습니다.");
+                }
+            }
+            catch (error) {
+                console.error(error)
+            }
+        };
+
+        const resetPassword = async () => {
+            try {
+                const response = await axios.post('http://localhost:8080/user/change-password', {
+                    userId: localStorage.getItem('userId'),
+                    newPassword: newPassword.value,
+                });
+                resetResult.value = response.data;
+                if (response.status === 200) {
+                    console.log(response.data);
+                    // alert("비밀번호가 재설정되었습니다.");
+                }
+                else {
+                    console.log(response.data);
+                    // alert("비밀번호 재설정에 실패했습니다.");
+                }
+            }
+            catch (error) {
+                console.error("비밀번호 재설정 오류", error);
+                // alert("비밀번호 재설정에 실패했습니다.");
+            }
+            showResetResultModal.value = true;
+        }
+
+        const closeAllModal = () => {
+            showResetResultModal.value = false;
+            showPwdResetModal.value = false;
+        }
+
 
         onMounted(() => {
             fetchUserInfo();
@@ -163,14 +223,21 @@ export default {
         return {
             showDeleteModal,
             showPwdResetModal,
+            showResetResultModal,
             password,
             email,
-            isAuthCodeValid,
             authCode,
+            isAuthEmailSent,
+            isAuthCodeValid,
+            newPassword,
+            resetResult,
             sendAuthEmail,
             deleteAccount,
             cancelDeletion,
             cancelReset,
+            checkAuthCode,
+            resetPassword,
+            closeAllModal,
         }
     }
 }
@@ -290,5 +357,21 @@ button {
     flex-direction: row;
     justify-content: space-between;
 
+}
+
+.button-wrapper {
+    background-color: lightseagreen;
+    color: black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+}
+
+.input-class {
+    width: 80%;
 }
 </style>
