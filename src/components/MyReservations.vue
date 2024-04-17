@@ -13,6 +13,9 @@
                         :data-target="'#modal-' + reservation.rvId" @click="showModal(reservation)">
                         체크인
                     </button>
+                    <button type="button" class="btn btn-danger" @click="cancelReservation(reservation)">
+                        예약 취소
+                    </button>
                 </div>
                 <div v-if="reservation.checkIn">
                     <h4>체크인 정보:</h4>
@@ -131,6 +134,26 @@ export default {
             const date = new Date(dateString);
             return date.toLocaleDateString();
         },
+        cancelReservation(reservation) {
+        if (!confirm("예약을 취소하시겠습니까?")) {
+            return;
+        }
+        const requestDTO = {
+            rvId: reservation.rvId
+        };
+        axios.delete('/reservation/delete', { data: requestDTO, headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }})
+        .then(response => {
+            alert(response.data);
+            this.fetchReservations();  // 예약 목록 갱신
+        })
+        .catch(error => {
+            console.error('예약 취소 실패:', error);
+            alert('예약 취소 실패: ' + error.response.data);
+        });
+    },
         checkInRoom(room, rvId) {
             const checkInRequest = {
                 userId: localStorage.getItem('userId'), // 사용자 ID
@@ -160,8 +183,9 @@ export default {
                     console.error('체크인 요청 실패:', error);
                     alert('체크인 실패: ' + error.response.data);
                 });
-        }
-    },
+            }
+        },
+        
     mounted() {
         this.fetchReservations();
     }
