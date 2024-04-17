@@ -6,15 +6,17 @@
                 <div class="col-md-6 d-flex justify-content-start align-items-begin">
                     <h3 class="mt-3">체크아웃 요청 승인</h3>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end align-items-begin">
-                    <button class="btn btn-primary mt-3">저장</button>
-                </div>
+                <!-- <div class="col-md-6 d-flex justify-content-end align-items-begin">
+                    <button class="btn btn-primary mt-3"
+                        @click="saveChangedStatus">저장</button>
+                </div> -->
             </div>
 
             <hr>
 
             <table class="table table-bordered mz-">
                 <tr class="submenu">
+                    <th>선택</th>
                     <th>체크아웃 요청ID</th>
                     <th>사용자ID</th>
                     <th>체크아웃 요청 날짜</th>
@@ -23,24 +25,33 @@
                 </tr>
 
                 <tbody>
-                    <tr v-for="room in rooms"
-                        :key="room.coutId" align="center">
-                        <td>{{room.coutId}}</td>
-                        <td>{{room.uId}}</td>
-                        <td>{{room.coutDate}}</td>
-                        <!-- <td :class="coutRooms.coutStatus" @click="toggleStatus(coutRoom)" @click.stop>
-                            {{coutRoom.rStatus ? 'Maintenance' : 'Available'}}
-                        </td> -->
+                    <tr v-for="coutRoom in coutRooms"
+                        :key="coutRoom.coutId" align="center">
                         <td>
+                            <button  class="btn btn-primary"
+                                    @click="approveCheckoutRequest(coutRoom.coutId)">승인</button>
+                            <button  class="btn btn-danger" 
+                                    @click="rejectCheckoutRequest(coutRoom.coutId)">거절</button>
+                            <!-- <button  class="btn btn-primary"
+                                    @click="selectRooms(coutRoom)">승인</button>
+                            <button  class="btn btn-danger" 
+                                    @click="selectRooms(coutRoom)">거절</button> -->
+                        </td>
+                        <td>{{coutRoom.coutId}}</td>
+                        <td>{{coutRoom.uid}}</td>
+                        <td>{{coutRoom.coutDate}}</td>                        
+                        <td>{{ coutRoom.checkOutStatusEnum }}</td>
+
+                        <!-- <td>
                             <div>
-                                <input type="radio" v-model="room.approvalStatus" value="ACCEPTED">
+                                <input type="radio" v-model="coutRoom.approvalStatus" value="ACCEPTED">
                                 ACCEPTED
                             </div>
                             <div>
-                                <input type="radio" v-model="room.approvalStatus" value="REJECTED">
+                                <input type="radio" v-model="coutRoom.approvalStatus" value="REJECTED">
                                 REJECTED
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
 
                 </tbody>
@@ -62,28 +73,112 @@ export default {
     },
     setup(){
         console.log(">>>>>> setup");
-        const rooms = ref([]);
+        const coutRooms = ref([]);
+        // const selectedCheckoutRoomIds = ref([]);
 
         const getCheckoutRooms = async () => {
-            console.log("happy");
             try {
-                const response = await axios.get('rooms');
-                rooms.value = response.data;
+                console.log(">>>>>> getRooms", coutRooms);
+                const response = await axios.get('http://localhost:8080/checkouts/all');
+                coutRooms.value = response.data;
             } catch (error) {
                 console.error(error);
             }
         }
         getCheckoutRooms();
 
-        const handleDateChange = (dates) => {
-            this.checkInDate = dates.checkInDate;
-            this.checkOutDate = dates.checkOutDate;
+        const approveCheckoutRequest = async (coutId) => {
+            try {
+                await axios.get(`http://localhost:8080/checkouts/approve/${coutId}`);
+                window.alert('승인되었습니다.');
+                window.location.reload();
+            } catch (error) {
+                console.error(error);
+                window.alert("오류! 처리되지 않았습니다.");
+            } 
         }
 
-        return {
-            rooms,
-            handleDateChange
+        const rejectCheckoutRequest = async (coutId) => {
+            try {
+                await axios.get(`http://localhost:8080/checkouts/reject/${coutId}`);
+                window.alert('거절되었습니다.');
+                window.location.reload();
+            } catch (error) {
+                console.error(error);
+                window.alert("오류! 처리되지 않았습니다.");
+            } 
         }
+
+        // const saveChangedStatus = async () => {
+        //     try {
+        //         // 선택된 방들의 ID를 이용하여 각 방의 상태를 변경
+        //         await Promise.all(selectedCheckoutRoomIds.value.map(coutId => axios.get(`http://localhost:8080/checkouts/approve/${coutId}`)));
+        //         window.alert('저장되었습니다.');
+        //         window.location.reload();
+        //     } catch (error) {
+        //         console.error(error);
+        //         window.alert("오류! 저장되지 않았습니다.");
+        //     }
+        // }
+
+        return {
+            coutRooms,
+            approveCheckoutRequest,
+            rejectCheckoutRequest
+            // saveChangedStatus
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        // console.log(">>>>>> setup");
+        // const coutRooms = ref([]);
+        // const selectedCheckoutRoomIds = ref([]);
+
+        // const getCheckoutRooms = async () => {
+        //     console.log("happy");
+        //     try {
+        //         console.log(">>>>>> getRooms", coutRooms);
+        //         const response = await axios.get('http://localhost:8080/checkouts/all');
+        //         coutRooms.value = response.data;
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // }
+        // getCheckoutRooms();
+        // const selectRooms = (coutRoom) => {
+        //     if (!selectedCheckoutRoomIds.value.includes(coutRoom.coutId)) {
+        //         selectedCheckoutRoomIds.value.push(coutRoom.coutId);
+        //     } else {
+        //         const index = selectedCheckoutRoomIds.value.indexOf(coutRoom.coutId);
+        //         selectedCheckoutRoomIds.value.splice(index, 1);
+        //     }
+        // }
+        // const saveChangedStatus = async () => {
+        //     try {
+        //         // 선택된 방들의 ID를 이용하여 각 방의 상태를 변경
+        //         await Promise.all(selectedCheckoutRoomIds.value.map(coutId => axios.get(`http://localhost:8080/checkouts/approve/${coutId}`)));
+        //         window.alert('저장되었습니다.');
+        //         window.location.reload();
+        //     } catch (error) {
+        //         console.error(error);
+        //         window.alert("오류! 저장되지 않았습니다.");
+        //     } 
+        // }
+
+        // return {
+        //     coutRooms,
+        //     selectRooms,
+        //     saveChangedStatus
+        // }
         
 
     }
