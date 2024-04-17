@@ -1,6 +1,7 @@
 <template>
   <div class="room-list">
     <div v-for="room in availableRooms" :key="room.type" class="room">
+      <img :src="getRoomImage(room.type)" class="card-img-top" alt="`Image of ${room.type}`" />
       <div class="room-details">
         <h3>{{ room.type }}</h3>
         <p>{{ room.description }}</p>
@@ -43,6 +44,19 @@ export default {
     }
   },
   methods: {
+    getRoomImage(roomType) {
+      switch (roomType) {
+        case 'SUPERIOR':
+          return "https://18db057190b78dc7.kinxzone.com/upfiles/resort/room/170425755812539117.jpg";
+        case 'DELUXE':
+          return "https://www.lottehotel.com/content/dam/lotte-hotel/lotte/seoul/accommodation/main-tower/club-flour/deluxe/180821-16-2000-acc-seoul-hotel.jpg.thumb.1920.1920.jpg";
+        case 'SUITE':
+          return "https://www.lottehotel.com/content/dam/lotte-hotel/lotte/seoul/accommodation/executive-tower/suite/royal-suite-room/181026-53-2000-roo-LTSE.jpg.thumb.1920.1920.jpg";
+        default:
+          return "https://www.lottehotel.com/content/dam/lotte-hotel/lotte/seoul/accommodation/main-tower/standard/deluxe/181107-8-2000-roo-LTSE.jpg.thumb.768.768.jpg"; // 기본 이미지 URL
+      }
+    },
+
     fetchAvailableRooms() {
       const reservationRequest = {
         rvDateFrom: this.checkInDate,

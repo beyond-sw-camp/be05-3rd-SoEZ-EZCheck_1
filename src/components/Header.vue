@@ -18,11 +18,11 @@
             <router-link class="nav-link" to="/Login">Login</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link class="nav-link" to="/signup">Signup</router-link>
+            <router-link class="nav-link" to="/signup">SignUp</router-link>
           </li>
 
           <!-- 로그인 후: MyPage 표시 -->
-        
+
           <li class="nav-item" v-if="isLoggedIn && !loggedType">
             <router-link class="nav-link" to="/MyPage">MyPage</router-link>
           </li>
@@ -32,7 +32,7 @@
           <li class="nav-item" v-if="isLoggedIn && loggedType">
             <router-link class="nav-link" to="/AdminHome">AdminPage</router-link>
           </li>
-  
+
 
           <!-- 로그인 후: LogOut 표시 -->
           <li class="nav-item" v-if="isLoggedIn">
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       isLoggedIn: !!localStorage.getItem('token') // 토큰이 있는지 여부 확인
-      , loggedType: localStorage.getItem('type')==="Admin" // 사용자 타입 확인
+      , loggedType: localStorage.getItem('type') === "Admin" // 사용자 타입 확인
     };
   },
   methods: {
