@@ -1,11 +1,12 @@
 <template>
-  <Header />
+  <div>
+    <Header />
   <div class="my-page">
     <h1>My Page</h1>
     <div class="navigation">
       <!-- 네비게이션 링크, 선택적으로 router-link 사용 가능 -->
-      <button @click="getUserInfo = 'info'">내 정보</button>
-      <button @click="selectedTab = 'reservations'">내 예약 목록</button>
+      <button button type="button" class="btn btn-outline-secondary" @click="getUserInfo = 'info'">내 정보</button>
+      <button button type="button" class="btn btn-outline-secondary" @click="selectedTab = 'reservations'">내 예약 목록</button>
     </div>
 
     <!-- 선택된 탭에 따라 다른 컴포넌트를 표시 -->
@@ -16,6 +17,8 @@
       <MyReservations />
     </div>
   </div>
+  </div>
+  
 </template>
 
 

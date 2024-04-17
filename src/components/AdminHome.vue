@@ -1,8 +1,10 @@
 <template>
+   <div>
     <Header/>
     <div>
         <AdminHeader/>hi
     </div>
+   </div>
 </template>
 
 <script>

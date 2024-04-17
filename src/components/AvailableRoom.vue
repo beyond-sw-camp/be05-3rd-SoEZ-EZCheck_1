@@ -1,5 +1,6 @@
 <template>
-  <Header/>
+  <div>
+    <Header/>
   <main>
     <h2>Available Rooms</h2>
       <!-- 날짜 선택 섹션 -->
@@ -12,6 +13,8 @@
         <RoomList :checkInDate="checkInDate" :checkOutDate="checkOutDate" />
       </section>
     </main>
+  </div>
+  
 </template>
 
 <script>

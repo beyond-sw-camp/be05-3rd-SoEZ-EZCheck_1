@@ -1,5 +1,6 @@
 <template>
-    <Header />
+    <div>
+        <Header />
     <div class="container">
         <form @submit.prevent="register">
 
@@ -57,6 +58,8 @@
             </div>
         </div>
     </div>
+    </div>
+    
 </template>
 
 <script>

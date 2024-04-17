@@ -1,5 +1,6 @@
 <template>
-  <Header />
+  <div>
+    <Header />
   <!-- <form>
   
   <div data-mdb-input-init class="form-outline mb-4">
@@ -69,6 +70,7 @@
       </button>
     </div>
   </form>
+  </div>
 </template>
 <script>
 import Header from './Header.vue';

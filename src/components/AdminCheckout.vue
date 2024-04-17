@@ -1,5 +1,6 @@
 <template>
-    <Header/>
+    <div>
+        <Header/>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -49,6 +50,7 @@
         </table>
     </div>
 
+    </div>
 </template>
 
 <script>
