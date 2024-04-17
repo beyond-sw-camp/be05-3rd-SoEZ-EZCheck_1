@@ -16,17 +16,21 @@
 
             <table class="table table-bordered mz-">
                 <tr class="submenu">
-                    <th>선택</th>
                     <th>체크아웃 요청ID</th>
                     <th>사용자ID</th>
                     <th>체크아웃 요청 날짜</th>
                     <th>체크아웃 상태</th>
+                    <th>선택</th>
                     <!-- 체크아웃 상태는 INPROGRESS, ACCEPTED나 REJECTED 중 택1 -->
                 </tr>
 
                 <tbody>
                     <tr v-for="coutRoom in coutRooms"
                         :key="coutRoom.coutId" align="center">
+                        <td>{{coutRoom.coutId}}</td>
+                        <td>{{coutRoom.uid}}</td>
+                        <td>{{coutRoom.coutDate}}</td>                        
+                        <td>{{ coutRoom.checkOutStatusEnum }}</td>
                         <td>
                             <button  class="btn btn-primary"
                                     @click="approveCheckoutRequest(coutRoom.coutId)">승인</button>
@@ -37,10 +41,6 @@
                             <button  class="btn btn-danger" 
                                     @click="selectRooms(coutRoom)">거절</button> -->
                         </td>
-                        <td>{{coutRoom.coutId}}</td>
-                        <td>{{coutRoom.uid}}</td>
-                        <td>{{coutRoom.coutDate}}</td>                        
-                        <td>{{ coutRoom.checkOutStatusEnum }}</td>
 
                         <!-- <td>
                             <div>
@@ -91,10 +91,11 @@ export default {
             try {
                 await axios.get(`http://localhost:8080/checkouts/approve/${coutId}`);
                 window.alert('승인되었습니다.');
-                window.location.reload();
+                getCheckoutRooms();
             } catch (error) {
                 console.error(error);
                 window.alert("오류! 처리되지 않았습니다.");
+                getCheckoutRooms();
             } 
         }
 
@@ -102,10 +103,11 @@ export default {
             try {
                 await axios.get(`http://localhost:8080/checkouts/reject/${coutId}`);
                 window.alert('거절되었습니다.');
-                window.location.reload();
+                getCheckoutRooms();
             } catch (error) {
                 console.error(error);
                 window.alert("오류! 처리되지 않았습니다.");
+                getCheckoutRooms();
             } 
         }
 
@@ -127,11 +129,6 @@ export default {
             rejectCheckoutRequest
             // saveChangedStatus
         }
-
-
-
-
-
 
 
 

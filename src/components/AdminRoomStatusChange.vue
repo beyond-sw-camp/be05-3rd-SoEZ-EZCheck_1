@@ -13,10 +13,6 @@
         <hr>
 
         <table class="table table-bordered mz-">
-            <!-- <caption>프로필 테이블</caption> -->
-            
-            
-
             <tr class="submenu">
                 <th>선택</th>
                 <th>객실ID</th>
@@ -26,7 +22,7 @@
             </tr> 
 
             <tbody>
-                <tr v-for="room in rooms" :key="room.rId" align="center">
+                <tr v-for="room in filteredRooms" :key="room.rid" align="center">
                     <td>
                         <input  type="checkbox" 
                                 @click="selectRooms(room)">
@@ -39,9 +35,6 @@
             </tbody>
         </table>
         
-        
-
-
         <div class="error"> <!-- 에러라는 데이터 바인딩 -->
             {{ error }}
         </div>
@@ -50,8 +43,7 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-// import {useRouter} from 'vue-router'
+import {ref, computed} from 'vue';
 import axios from 'axios';
 import Header from './Header.vue';
 
@@ -60,13 +52,11 @@ export default {
         Header
     },
     setup () {
-        console.log(">>>>>> setup");
         const rooms = ref([]);
         const selectedRoomIds = ref([]);
 
         const getRooms = async () => {
             try {
-                console.log(">>>>>> getRooms", rooms);
                 const response = await axios.get('http://localhost:8080/room/allRooms');
                 rooms.value = response.data;
             } catch (error) {
@@ -74,7 +64,6 @@ export default {
             }
         }
         getRooms();
-
 
         const selectRooms = (room) => {
             if (!selectedRoomIds.value.includes(room.rid)) {
@@ -87,45 +76,24 @@ export default {
 
         const saveChangedStatus = async () => {
             try {
-                // 선택된 방들의 ID를 이용하여 각 방의 상태를 변경
                 await Promise.all(selectedRoomIds.value.map(roomId => axios.get(`http://localhost:8080/room/updateRoomStatus/${roomId}`)));
                 window.alert('저장되었습니다.');
-                window.location.reload();
+                getRooms();
             } catch (error) {
                 console.error(error);
                 window.alert("오류! 저장되지 않았습니다.");
+                getRooms();
             } 
         }
 
-        // const saveChangedStatus = async () => {
-        //     try {
-        //         // 선택된 방들의 ID를 이용하여 각 방의 상태를 가져옴
-        //         const roomStatusPromises = selectedRoomIds.value.map(roomId => axios.get(`http://localhost:8080/room/getRoomStatus/${roomId}`));
-        //         const roomStatusResponses = await Promise.all(roomStatusPromises);
-        //         const roomStatuses = roomStatusResponses.map(response => response.data);
-
-        //         // 선택된 방들의 현재 상태를 확인하여 변동사항이 있는지 체크
-        //         const changedRooms = selectedRoomIds.value.filter((roomId, index) => roomStatuses[index] !== rooms.value.find(room => room.rid === roomId).roomStatusEnum);
-
-        //         if (changedRooms.length === 0) {
-        //             // 변동사항이 없는 경우
-        //             window.alert('변동사항이 없습니다.');
-        //         } else {
-        //             // 변동사항이 있는 경우에만 변경된 상태를 저장
-        //             await Promise.all(changedRooms.map(roomId => axios.get(`http://localhost:8080/room/updateRoomStatus/${roomId}`)));
-        //             window.alert('변경사항이 저장되었습니다.');
-        //         }
-        //     } catch (error) {
-        //         console.error(error);
-        //         window.alert("오류! 저장되지 않았습니다.");
-        //     } 
-        // }
+        const filteredRooms = computed(() => rooms.value.filter(room => room.roomStatusEnum === "MAINTENANCE"));
 
         return {
             selectRooms,
             rooms,
             getRooms,
-            saveChangedStatus
+            saveChangedStatus,
+            filteredRooms
         }
     }
 
@@ -143,13 +111,8 @@ export default {
     }
     
     .submenu th{
-        line-height: 40px;          /* 텍스트 한 줄의 높이 설정 */
-        text-align: center;         /* 텍스트를 가운데로 정렬 */
-        /* list-style-type: none; */
-        /* float: left;                왼쪽으로 나열되도록 설정 */
-        /* scroll-snap-align: middle;     세로 정렬을 가운데로 설정 */
-        /* position: relative; */
-        /* margin-right: 25%;     li간 간격 조절 */
+        line-height: 40px;          
+        text-align: center;         
     }
     .text-right  {
         float: right;
