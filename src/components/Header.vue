@@ -2,7 +2,12 @@
   <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <!-- Home 항목 항상 표시 -->
+      <div v-if="isLoggedIn && loggedType">
+        <router-link class="navbar-brand" to="/AdminHome">AdminHome</router-link>
+        </div>
+        <div v-else>
       <router-link class="navbar-brand" to="/">Home</router-link>
+      </div>
 
       <!-- 햄버거 메뉴 버튼, 오른쪽 정렬 -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -29,9 +34,9 @@
           <li class="nav-item" v-if="isLoggedIn && !loggedType">
             <router-link class="nav-link" to="/AvailableRoom">AvailableRooms</router-link>
           </li>
-          <li class="nav-item" v-if="isLoggedIn && loggedType">
+          <!-- <li class="nav-item" v-if="isLoggedIn && loggedType">
             <router-link class="nav-link" to="/AdminHome">AdminPage</router-link>
-          </li>
+          </li> -->
 
 
           <!-- 로그인 후: LogOut 표시 -->

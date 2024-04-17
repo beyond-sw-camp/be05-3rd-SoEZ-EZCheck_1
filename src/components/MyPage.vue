@@ -5,8 +5,8 @@
     <h1>My Page</h1>
     <div class="navigation">
       <!-- 네비게이션 링크, 선택적으로 router-link 사용 가능 -->
-      <button type="button" @click="selectedTab = 'info'">내 정보</button>
-      <button @click="selectedTab = 'reservations'">내 예약 목록</button>
+      <button type="button" @click="selectedTab = 'info'" class="btn btn-light">내 정보</button>
+      <button @click="selectedTab = 'reservations'" class="btn btn-light">내 예약 목록</button>
     </div>
 
     <hr />

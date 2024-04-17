@@ -13,18 +13,20 @@
     <input type="password" id="form2Example2" class="form-control" />
     <label class="form-label" for="form2Example2">Password</label>
   </div>  -->
-
-  <form @submit.prevent="signIn">
+<br/>
+  <form @submit.prevent="signIn"  class="form-container">
     <!-- Id input -->
     <div class="form-outline mb-4">
-      <input type="text" v-model="userId" class="form-control" />
       <label class="form-label">User Id</label>
+      <br/>
+      <input type="text" v-model="userId" class="form-control" />
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4">
-      <input type="password" v-model="password" class="form-control" />
       <label class="form-label">Password</label>
+      <br/>
+      <input type="password" v-model="password" class="form-control" />
     </div>
 
     <!-- 2 column grid layout for inline styling -->
@@ -37,10 +39,9 @@
         </div>
       </div>
 
-      <div class="col">
-        <!-- Simple link -->
+      <!-- <div class="col">
         <a href="#!">Forgot password?</a>
-      </div>
+      </div> -->
     </div>
 
     <!-- Submit button 
@@ -116,5 +117,18 @@ export default {
 }
 </script>
 
+<style scoped>
+.form-container {
+  max-width: 50%;
+  margin: 0 auto;
+}
 
-<style></style>
+.form-outline {
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+}
+
+</style>
